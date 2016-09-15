@@ -27,11 +27,24 @@
           zoom: 14
         });
 
+        var popupWindow = 'Yaas Grill';
+            popupWindow += '1629 Lonsdale Ave,<br>';
+            popupWindow += 'North Vancouver,<br>';
+            popupWindow += 'BC V7M 2J5';
+
+        var infowindow = new google.maps.InfoWindow({
+            content: popupWindow
+        });
+
         var marker = new google.maps.Marker({
           position: store,
           map: map,
           title: 'Yaas is my favorate restaurant because it is cheap and has many delicious foods!'
         }); 
+
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
       }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6l81IkpPecGoMcO_9HQftoEzMn_tP9t8&callback=initMap"
