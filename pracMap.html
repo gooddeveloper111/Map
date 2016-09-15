@@ -20,7 +20,7 @@
     <script>
       var map;
       function initMap() {
-        var store = {lat: 49.3236418, lng: -123.0727343};
+        var Yaas = {lat: 49.3236418, lng: -123.0727343};
 
         map = new google.maps.Map(document.getElementById('map'), {
           center: store,
@@ -37,14 +37,14 @@
         });
 
         var marker = new google.maps.Marker({
-          position: store,
+          position: Yaas,
           map: map,
           title: 'Yaas is my favorate restaurant because it is cheap and has many delicious foods!'
         }); 
 
         marker.addListener('click', function() {
           infowindow.open(map, marker);
-        });
+        }); 
       }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6l81IkpPecGoMcO_9HQftoEzMn_tP9t8&callback=initMap"
