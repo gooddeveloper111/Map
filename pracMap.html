@@ -1,21 +1,41 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
+    <title>Payman Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
       html, body {
         height: 100%;
-        margin: 0;
-        padding: 0;
+        margin: 1px;
+        padding: 1px;
       }
       #map {
         height: 100%;
       }
+
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }  
     </style>
   </head>
   <body>
+
+    <div id="floating-panel">
+      <input id="address" type="textbox" value="Sydney, NSW">
+      <input id="submit" type="button" value="Geocode">
+    </div>
+
     <div id="map"></div>
     <script>
       var map;
@@ -49,21 +69,43 @@
               position: Yaas,
               map: map,
               title: 'Yaas is my favorate restaurant because it is cheap and has many delicious foods!'
-            });  
+          });  
 
             markermyCity = new google.maps.Marker({
               position: myCity,
               map: map,
               title: 'This city is good, but sometimes I am not sure I live in Canada! It is like you live in India. I like multiculture.'  
-            }); 
+          }); 
 
         markerYaas.addListener('click', function() {
           infowindow.open(map, markerYaas);
-        }); 
+          }); 
 
         markermyCity.addListener('click', function() {
           infowindow2.open(map, markermyCity);
-        }); 
+          }); 
+
+        var geocoder = new google.maps.Geocoder();
+
+        document.getElementById('submit').addEventListener('click', function() {
+          geocodeAddress(geocoder, map);
+        });
+      }
+
+
+      function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
       }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6l81IkpPecGoMcO_9HQftoEzMn_tP9t8&callback=initMap"
