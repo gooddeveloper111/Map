@@ -20,30 +20,49 @@
     <script>
       var map;
       function initMap() {
-        var Yaas = {lat: 49.3236418, lng: -123.0727343};
+        var Yaas = {lat: 49.3236418, lng: -123.0727343},
+            myCity = {lat: 49.1895916, lng: -122.8478344};
 
         map = new google.maps.Map(document.getElementById('map'), {
-          center: store,
-          zoom: 14
+          center: Yaas,
+          zoom: 10
         });
 
-        var popupWindow = 'Yaas Grill';
+        var popupWindow = 'Yaas Grill,<br>';
             popupWindow += '1629 Lonsdale Ave,<br>';
             popupWindow += 'North Vancouver,<br>';
             popupWindow += 'BC V7M 2J5';
 
+        var popupWindow2 = 'Surrey Central';
+            popupWindow2 += '10153 King George Blvd,<br>';
+            popupWindow2 += 'Surrey, BC V3T 2W1';    
+
         var infowindow = new google.maps.InfoWindow({
             content: popupWindow
-        });
+          });
 
-        var marker = new google.maps.Marker({
-          position: Yaas,
-          map: map,
-          title: 'Yaas is my favorate restaurant because it is cheap and has many delicious foods!'
+        var infowindow2 = new google.maps.InfoWindow({
+            content: popupWindow2
+          });
+
+        var markerYaas = new google.maps.Marker({
+              position: Yaas,
+              map: map,
+              title: 'Yaas is my favorate restaurant because it is cheap and has many delicious foods!'
+            });  
+
+            markermyCity = new google.maps.Marker({
+              position: myCity,
+              map: map,
+              title: 'This city is good, but sometimes I am not sure I live in Canada! It is like you live in India. I like multiculture.'  
+            }); 
+
+        markerYaas.addListener('click', function() {
+          infowindow.open(map, markerYaas);
         }); 
 
-        marker.addListener('click', function() {
-          infowindow.open(map, marker);
+        markermyCity.addListener('click', function() {
+          infowindow2.open(map, markermyCity);
         }); 
       }
     </script>
